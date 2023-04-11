@@ -1,0 +1,142 @@
+import 'dart:ui';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class MyTopContainer extends StatefulWidget {
+  const MyTopContainer({super.key});
+
+  @override
+  State<MyTopContainer> createState() => _MyTopContainerState();
+}
+
+class _MyTopContainerState extends State<MyTopContainer> {
+  _launchURL(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  final List<dynamic> _linkIconColorList = [
+    ['https://www.linkedin.com/in/akhand-pratap-tiwari-37621b22a/', FontAwesomeIcons.linkedin, Colors.lightBlue],
+    ['https://github.com/Akhand-Pratap-Tiwari/', FontAwesomeIcons.squareGithub, Colors.black],
+    ['https://www.youtube.com/channel/UCx0ucku5Par4_Gzs5C89UJA/featured', FontAwesomeIcons.squareYoutube, Colors.red],
+    ['https://www.instagram.com/Akhand_Pratap_Tiwari/', FontAwesomeIcons.instagram, Colors.purpleAccent],
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var ellipticalBorderRadius = BorderRadius.only(
+        bottomLeft: Radius.elliptical(size.width / 2, 175),
+        bottomRight: Radius.elliptical(size.width / 2, 175));
+    return ClipRRect(
+      borderRadius: ellipticalBorderRadius,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        child: Container(
+          width: size.width,
+          height: size.height / 1.15,
+          decoration: BoxDecoration(
+            color: Colors.black45,
+            borderRadius: ellipticalBorderRadius,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.elliptical(150, 70),
+                  bottomRight: Radius.elliptical(150, 70),
+                ),
+                child: Image.asset(
+                  'assets/img/Photo4.jpg',
+                  scale: 3.5,
+                ),
+              ),
+              Flexible(
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.displaySmall,
+                    children: const [
+                      TextSpan(text: 'Hi There,'),
+                      TextSpan(text: '\nI am '),
+                      TextSpan(
+                        text: 'Akhand P. Tiwari',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'I am a ',
+                    style: TextStyle(
+                        fontSize: Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .fontSize),
+                  ),
+                  AnimatedTextKit(
+                    repeatForever: true,
+                    animatedTexts: [
+                      TyperAnimatedText('Cross-platform Developer',
+                          textStyle: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .fontSize,
+                            color: Colors.purpleAccent,
+                          )),
+                      TyperAnimatedText('Flutter Developer',
+                          textStyle: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .fontSize,
+                            color: Colors.lightBlue,
+                          )),
+                      TyperAnimatedText('UI/UX Designer',
+                          textStyle: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .fontSize,
+                            color: Colors.pinkAccent,
+                          ))
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: List.generate(
+                  4,
+                  (index) => IconButton(
+                    onPressed: () => _launchURL(_linkIconColorList[index][0]),
+                    icon: FaIcon(_linkIconColorList[index][1]),
+                    iconSize: 50,
+                    color: _linkIconColorList[index][2],
+                  ),
+                ),
+              ),
+              const Divider(color: Colors.transparent),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

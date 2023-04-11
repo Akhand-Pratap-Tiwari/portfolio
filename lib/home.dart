@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/desktop_layout/d_home.dart';
 
 import 'mobile_layout/m_home.dart';
-import 'tablet_layout/t_home.dart';
+import 'tablet_layout/t_home/t_home.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
