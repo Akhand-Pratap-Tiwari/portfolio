@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -54,10 +53,12 @@ class _MyTopContainerState extends State<MyTopContainer> {
         bottomRight: Radius.elliptical(size.width / 2, 175));
     List<Widget> pic = [
       ClipRRect(
-        borderRadius: size.width <= 1007 ? BorderRadius.only(
-          bottomLeft: Radius.elliptical(150, 80),
-          bottomRight: Radius.elliptical(150, 80),
-        ) : BorderRadius.circular(24),
+        borderRadius: size.width <= 1007
+            ? const BorderRadius.only(
+                bottomLeft: Radius.elliptical(150, 80),
+                bottomRight: Radius.elliptical(150, 80),
+              )
+            : BorderRadius.circular(24),
         child: Image.asset(
           'assets/img/Photo4.jpg',
           scale: 3.5,
@@ -93,7 +94,9 @@ class _MyTopContainerState extends State<MyTopContainer> {
               ),
             ),
           ),
-          Divider(color: Colors.transparent,),
+          const Divider(
+            color: Colors.transparent,
+          ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -128,7 +131,9 @@ class _MyTopContainerState extends State<MyTopContainer> {
               )
             ],
           ),
-          Divider(color: Colors.transparent,),
+          const Divider(
+            color: Colors.transparent,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.min,
@@ -147,29 +152,57 @@ class _MyTopContainerState extends State<MyTopContainer> {
       const Divider(color: Colors.transparent),
     ];
 
-    return ClipRRect(
-      borderRadius: ellipticalBorderRadius,
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-        child: Container(
-          width: size.width,
-          height: size.height / 1.15,
-          decoration: BoxDecoration(
-            color: Colors.black45,
-            borderRadius: ellipticalBorderRadius,
-          ),
-          child: size.width <= 1007
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: pic..addAll(txtAndSocial),
-                )
-              : Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width >= 1352 ? 96*2 : 32),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: txtAndSocial..addAll(pic),
+    return Material(
+      color: Colors.transparent,
+      borderRadius: size.width >= 1007
+          ? BorderRadius.only(
+              bottomLeft: Radius.elliptical(size.width / 2, 200),
+              bottomRight: Radius.elliptical(size.width / 2, 200))
+          : ellipticalBorderRadius,
+      elevation: 20,
+      child: ClipRRect(
+        borderRadius: size.width >= 1007
+            ? BorderRadius.only(
+                bottomLeft: Radius.elliptical(size.width / 2, 200),
+                bottomRight: Radius.elliptical(size.width / 2, 200))
+            : ellipticalBorderRadius,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: Container(
+            width: size.width,
+            height: size.height / 1.15,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.pinkAccent.withOpacity(0.3),
+                  Colors.blue.withOpacity(0.7)
+                ],
+                stops: const [0, 1],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: size.width >= 1007
+                  ? BorderRadius.only(
+                      bottomLeft: Radius.elliptical(size.width / 2, 200),
+                      bottomRight: Radius.elliptical(size.width / 2, 200))
+                  : ellipticalBorderRadius,
+            ),
+            child: size.width <= 1007
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: pic..addAll(txtAndSocial),
+                  )
+                : Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.width >= 1352 ? 96 * 2 : 32,
+                        vertical: 32),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: txtAndSocial..addAll(pic),
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     );
