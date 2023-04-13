@@ -34,26 +34,59 @@ class _THomeState extends State<THome> {
     'assets/img/sql.jpg'
   ];
 
+  List<String> _tabNames = [
+    'Home',
+    'About',
+    'Skills',
+    'Projects',
+    'Work Exp.',
+    'Contact',
+  ];
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
+    int selectedIndex = 0;
     return DefaultTabController(
       animationDuration: const Duration(milliseconds: 100),
       length: 6,
       child: Scaffold(
-        appBar: TabBar(
-          labelStyle: const TextStyle(fontSize: 19),
-          unselectedLabelStyle: Theme.of(context).textTheme.bodyLarge,
-          splashBorderRadius: BorderRadius.circular(72),
-          tabs: const [
-            Tab(text: 'Home'),
-            Tab(text: 'About'),
-            Tab(text: 'Skills'),
-            Tab(text: 'Projects'),
-            Tab(text: 'Work Exp.'),
-            Tab(text: 'Contact')
-          ],
+        // floatingActionButton: FloatingActionButton(onPressed: (){}),
+        extendBodyBehindAppBar: true,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(64),
+          child: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+              child: Material(
+                color: Colors.black45,
+                child: TabBar(
+                  indicator: BoxDecoration(
+                    gradient:
+                        LinearGradient(colors: [Colors.indigo, Colors.cyan]),
+                    borderRadius: BorderRadius.circular(48),
+                  ),
+                  labelPadding: EdgeInsets.all(8),
+                  indicatorPadding: EdgeInsets.all(8),
+                  labelStyle: Theme.of(context).textTheme.bodyLarge,
+                  splashBorderRadius: BorderRadius.circular(48),
+                  tabs: List.generate(
+                    6,
+                    (index) => Center(
+                      child: Tab(
+                        child: Center(
+                          child: Text(
+                            _tabNames[index],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
         body: Stack(
           alignment: Alignment.topCenter,
@@ -68,64 +101,71 @@ class _THomeState extends State<THome> {
               ),
             ),
             SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const MyTopContainer(),
-                  Divider(
-                    color: Colors.transparent,
-                    height: 100,
-                  ),
-                  MyBlurredContainer(
-                    animation: 'assets/anim/development.json',
-                    title: 'About Me',
-                    body1: RichText(
-                      text: TextSpan(
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        children: [
-                          TextSpan(text: 'Hello! I am, '),
-                          TextSpan(
-                            text: 'Akhand P. Tiwari. ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.lightBlueAccent,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 64.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const MyTopContainer(),
+                    Divider(
+                      color: Colors.transparent,
+                      height: 100,
+                    ),
+                    MyBlurredContainer(
+                      animation: 'assets/anim/development.json',
+                      title: 'About Me',
+                      body1: RichText(
+                        text: TextSpan(
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          children: [
+                            TextSpan(text: 'Hello! I am, '),
+                            TextSpan(
+                              text: 'Akhand P. Tiwari. ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.lightBlueAccent,
+                              ),
                             ),
-                          ),
-                          TextSpan(text: _intro1),
-                        ],
+                            TextSpan(text: _intro1),
+                          ],
+                        ),
+                      ),
+                      body2: RichText(
+                        text: TextSpan(
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          children: [
+                            TextSpan(text: _intro2),
+                          ],
+                        ),
                       ),
                     ),
-                    body2: RichText(
-                      text: TextSpan(
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        children: [
-                          TextSpan(text: _intro2),
-                        ],
-                      ),
-                    ),
-                  ),
-                  MyBlurredContainer(
-                    title: 'Skills and Abilities',
-                    body1: SizedBox(
-                      // width: size.width,
-                      height: 350,
-                      child: GridView.count(
+                    MyBlurredContainer(
+                      title: 'Skills',
+                      body1: GridView.count(
+                        // childAspectRatio: 1/2,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
                         // maxCrossAxisExtent: 4,
-                        crossAxisCount: 4,
+                        crossAxisCount: (size.width/150).toInt(),
                         mainAxisSpacing: 32,
                         crossAxisSpacing: 32,
                         children: List.generate(
-                          8,
-                          (index) => ClipRRect(
-                            borderRadius: BorderRadius.circular(32),
-                            child: Image.asset(_skillPaths[index]),
+                          _skillPaths.length,
+                          (index) => GridTile(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(32),
+                              child: Image.asset(_skillPaths[index]),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  // MyBlurredContainer(title: 'Projects', body1: body1)
-                ],
+                    MyBlurredContainer(
+                      title: 'Projects',
+                      body1: Text('data'),
+                    )
+                  ],
+                ),
               ),
             ),
           ],

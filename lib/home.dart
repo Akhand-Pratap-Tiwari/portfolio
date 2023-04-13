@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
           } else if (constraints.maxWidth <= 1007) {
             return const THome();
           } else {
-            return const DHome(); //destops
+            return const THome(); //destops
           }
         },
       ),
