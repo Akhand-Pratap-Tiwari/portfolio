@@ -107,46 +107,53 @@ class _THomeState extends State<THome> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const MyTopContainer(),
-                    Divider(
+                    const Divider(
                       color: Colors.transparent,
                       height: 100,
                     ),
                     MyBlurredContainer(
-                      animation: 'assets/anim/development.json',
+                      // animation: 'assets/anim/development.json',
                       title: 'About Me',
-                      body1: RichText(
-                        text: TextSpan(
-                          style: Theme.of(context).textTheme.bodyLarge,
-                          children: [
-                            TextSpan(text: 'Hello! I am, '),
-                            TextSpan(
-                              text: 'Akhand P. Tiwari. ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.lightBlueAccent,
-                              ),
+                      body: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              style: Theme.of(context).textTheme.bodyLarge,
+                              children: [
+                                const TextSpan(text: 'Hello! I am, '),
+                                const TextSpan(
+                                  text: 'Akhand P. Tiwari. ',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.lightBlueAccent,
+                                  ),
+                                ),
+                                TextSpan(text: _intro1),
+                              ],
                             ),
-                            TextSpan(text: _intro1),
-                          ],
-                        ),
-                      ),
-                      body2: RichText(
-                        text: TextSpan(
-                          style: Theme.of(context).textTheme.bodyLarge,
-                          children: [
-                            TextSpan(text: _intro2),
-                          ],
-                        ),
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: LottieBuilder.asset(
+                                'assets/anim/development.json'),
+                          ),
+                          Text(
+                            _intro2,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ],
                       ),
                     ),
                     MyBlurredContainer(
                       title: 'Skills',
-                      body1: GridView.count(
+                      body: GridView.count(
                         // childAspectRatio: 1/2,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         // maxCrossAxisExtent: 4,
-                        crossAxisCount: (size.width/150).toInt(),
+                        crossAxisCount: (size.width / 150).toInt(),
                         mainAxisSpacing: 32,
                         crossAxisSpacing: 32,
                         children: List.generate(
@@ -162,7 +169,7 @@ class _THomeState extends State<THome> {
                     ),
                     MyBlurredContainer(
                       title: 'Projects',
-                      body1: Text('data'),
+                      body: Text('data'),
                     )
                   ],
                 ),

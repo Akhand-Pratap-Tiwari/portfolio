@@ -7,19 +7,12 @@ import 'package:lottie/lottie.dart';
 
 class MyBlurredContainer extends StatefulWidget {
   final String title;
-  final String? animation;
-  final bool alignRight, alignMiddle;
-  final Widget body1;
-  final Widget? body2;
+  final Widget body;
 
   const MyBlurredContainer({
     super.key,
     required this.title,
-    required this.body1,
-    this.body2,
-    this.animation,
-    this.alignRight = false,
-    this.alignMiddle = true,
+    required this.body,
   });
 
   @override
@@ -27,18 +20,18 @@ class MyBlurredContainer extends StatefulWidget {
 }
 
 class _MyBlurredContainerState extends State<MyBlurredContainer> {
+  var borderRadius = BorderRadius.circular(16.0);
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: borderRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Container(
             padding: EdgeInsets.all(16.0),
-            width: size.width,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -49,7 +42,7 @@ class _MyBlurredContainerState extends State<MyBlurredContainer> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: borderRadius,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,40 +50,18 @@ class _MyBlurredContainerState extends State<MyBlurredContainer> {
                 Text(
                   widget.title,
                   style: TextStyle(
-                      fontSize:
-                          Theme.of(context).textTheme.displayMedium!.fontSize),
+                    fontSize:
+                        Theme.of(context).textTheme.displayMedium!.fontSize,
+                  ),
                 ),
-                Divider(
+                const Divider(
                   color: Colors.white,
                   height: 10,
                 ),
-                Row(
-                  // mainAxisSize: MainAxisSize.min,
-                  children: [
-                    !widget.alignMiddle &&
-                            !widget.alignRight &&
-                            widget.animation != null
-                        ? LottieBuilder.asset(widget.animation!)
-                        : Container(),
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 16.0),
-                        child: widget.body1,
-                      ),
-                    ),
-                    !widget.alignMiddle &&
-                            widget.alignRight &&
-                            widget.animation != null
-                        ? LottieBuilder.asset(widget.animation!)
-                        : Container(),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: widget.body,
                 ),
-                widget.alignMiddle &&
-                        !widget.alignRight &&
-                        widget.animation != null
-                    ? Center(child: LottieBuilder.asset(widget.animation!))
-                    : Container(),
-                widget.body2 ?? Container(),
               ],
             ),
           ),
