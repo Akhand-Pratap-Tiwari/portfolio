@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:lottie/lottie.dart';
 import 'package:portfolio/tablet_layout/t_home/t_top_container.dart';
+import 'package:portfolio/tablet_layout/t_home/video_player.dart';
 
 import 't_blurred_container.dart';
 
@@ -49,30 +51,149 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
   late TabController _tabController;
   late ScrollController _scrollController;
 
+  var key0 = GlobalKey();
+  var key1 = GlobalKey();
+  var key2 = GlobalKey();
+  var key3 = GlobalKey();
+  var key4 = GlobalKey();
+  var key5 = GlobalKey();
+  late final List<GlobalKey> keyList;
+
+  int selectedIndex = 0;
   @override
   void initState() {
+    keyList = [key0, key1, key2, key3, key4, key5];
+
     _tabController = TabController(
       length: 6,
       vsync: this,
       animationDuration: const Duration(milliseconds: 100),
     );
-    _scrollController = ScrollController()..addListener(() {
 
-    });
+    _scrollController = ScrollController()
+      ..addListener(() {
+        if (_scrollController.position.userScrollDirection ==
+                ScrollDirection.reverse &&
+            selectedIndex < 3) {
+          RenderBox box = keyList[selectedIndex + 1]
+              .currentContext!
+              .findRenderObject() as RenderBox;
+          Offset position = box.localToGlobal(Offset.zero);
+          //this is global position
+          if (position.dy <= 64) {
+            debugPrint('$selectedIndex');
+            ++_tabController.index;
+            ++selectedIndex;
+          }
+        } else if (_scrollController.position.userScrollDirection ==
+                ScrollDirection.forward &&
+            selectedIndex > 0) {
+          RenderBox box = keyList[selectedIndex - 1]
+              .currentContext!
+              .findRenderObject() as RenderBox;
+          Offset position = box.localToGlobal(Offset.zero);
+          //this is global position
+          if (box.size.height / 2 + position.dy >= 64) {
+            debugPrint('$selectedIndex');
+            --_tabController.index;
+            --selectedIndex;
+          }
+        }
+      });
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     // var keyList = List.filled(4, GlobalKey());
-    var key0 = GlobalKey();
-    var key1 = GlobalKey();
-    var key2 = GlobalKey();
-    var key3 = GlobalKey();
-    var key4 = GlobalKey();
-    var key5 = GlobalKey();
-    var keyList = [key0, key1, key2, key3, key4, key5];
-
+    List<Widget> widgetList = [
+      MyBlurredContainer(
+        key: keyList[1],
+        // animation: 'assets/anim/development.json',
+        title: 'About Me',
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            RichText(
+              text: TextSpan(
+                style: Theme.of(context).textTheme.bodyLarge,
+                children: [
+                  const TextSpan(text: 'Hello! I am, '),
+                  const TextSpan(
+                    text: 'Akhand P. Tiwari. ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.lightBlueAccent,
+                    ),
+                  ),
+                  TextSpan(text: _intro1),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: Colors.black45,
+                ),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    debugPrint('debug1 :' + constraints.maxWidth.toString());
+                    return LottieBuilder.asset(
+                    'assets/anim/ready.json',
+                    height: constraints.maxWidth / 1.5,
+                    width: constraints.maxWidth / 1.5,
+                    alignment: Alignment.center,
+                    frameRate: FrameRate.max,
+                    reverse: true,
+                  );},
+                ),
+              ),
+            ),
+            Text(
+              _intro2,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ],
+        ),
+      ),
+      MyBlurredContainer(
+        key: keyList[2],
+        title: 'Skills',
+        body: LayoutBuilder(
+          builder: (context, constraints) => GridView.count(
+            // childAspectRatio: 1/2,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            // maxCrossAxisExtent: 4,
+            crossAxisCount: constraints.maxWidth ~/ 150,
+            mainAxisSpacing: 32,
+            crossAxisSpacing: 32,
+            children: List.generate(
+                _skillPaths.length,
+                (index) => SkillBadge(
+                      index: index,
+                    )),
+          ),
+        ),
+      ),
+      MyBlurredContainer(
+        key: keyList[3],
+        title: 'Projects',
+        body: LayoutBuilder(
+          builder: (context, constraints) => VideoApp(
+            videoHeight: constraints.maxWidth / 2,
+            description: Text('data'),
+            gitHubUrl:
+                'https://github.com/Akhand-Pratap-Tiwari/Automatic-Extractive-Text-Summarization-using-TF-IDF',
+            videoLink: 'assets/vids/gdsc_rec_app.mp4',
+          ),
+        ),
+      )
+    ];
     var size = MediaQuery.of(context).size;
     return Scaffold(
       // floatingActionButton: FloatingActionButton(onPressed: (){}),
@@ -85,11 +206,14 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
             child: Material(
               color: Colors.black45,
               child: TabBar(
-                onTap: (value) => Scrollable.ensureVisible(
-                  keyList[value].currentContext!,
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeOutBack,
-                ),
+                onTap: (value) {
+                  selectedIndex = value;
+                  Scrollable.ensureVisible(
+                    keyList[value].currentContext!,
+                    duration: Duration(seconds: 1),
+                    curve: Curves.elasticOut,
+                  );
+                },
                 controller: _tabController,
                 indicator: BoxDecoration(
                   gradient: const LinearGradient(
@@ -134,99 +258,27 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
             physics: BouncingScrollPhysics(),
             controller: _scrollController,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  key: keyList[0],
                   padding: EdgeInsets.only(top: 64.0),
-                  child: MyTopContainer(),
+                  child: MyTopContainer(
+                    key: keyList[0],
+                  ),
                 ),
-                GridView.count(
-                  childAspectRatio: 1 / 1.2,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: size.width ~/ 760,
-                  mainAxisSpacing: 5,
-                  crossAxisSpacing: 5,
-                  children: [
-                    MyBlurredContainer(
-                      key: keyList[1],
-                      // animation: 'assets/anim/development.json',
-                      title: 'About Me',
-                      body: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              style: Theme.of(context).textTheme.bodyLarge,
-                              children: [
-                                const TextSpan(text: 'Hello! I am, '),
-                                const TextSpan(
-                                  text: 'Akhand P. Tiwari. ',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.lightBlueAccent,
-                                  ),
-                                ),
-                                TextSpan(text: _intro1),
-                              ],
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                color: Colors.black45,
-                              ),
-                              child: LayoutBuilder(
-                                builder: (context, constraints) =>
-                                    LottieBuilder.asset(
-                                  'assets/anim/ready.json',
-                                  height: constraints.maxWidth / 1.5,
-                                  width: constraints.maxWidth / 1.5,
-                                  alignment: Alignment.center,
-                                  frameRate: FrameRate.max,
-                                  reverse: true,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            _intro2,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ],
+                size.width ~/ 700 <= 1
+                    ? Column(
+
+                        children: widgetList,
+                      )
+                    : GridView.count(
+                        childAspectRatio: 1 / 1.25,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 5,
+                        crossAxisSpacing: 5,
+                        children: widgetList,
                       ),
-                    ),
-                    MyBlurredContainer(
-                      key: keyList[2],
-                      title: 'Skills',
-                      body: LayoutBuilder(
-                        builder: (context, constraints) => GridView.count(
-                          // childAspectRatio: 1/2,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          // maxCrossAxisExtent: 4,
-                          crossAxisCount: constraints.maxWidth ~/ 150,
-                          mainAxisSpacing: 32,
-                          crossAxisSpacing: 32,
-                          children: List.generate(
-                              _skillPaths.length,
-                              (index) => SkillBadge(
-                                    index: index,
-                                  )),
-                        ),
-                      ),
-                    ),
-                    MyBlurredContainer(
-                      key: keyList[3],
-                      title: 'Projects',
-                      body: Text('data'),
-                    )
-                  ],
-                ),
               ],
             ),
           ),

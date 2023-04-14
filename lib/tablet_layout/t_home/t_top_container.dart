@@ -51,20 +51,30 @@ class _MyTopContainerState extends State<MyTopContainer> {
     var ellipticalBorderRadius = BorderRadius.only(
         bottomLeft: Radius.elliptical(size.width / 2, 175),
         bottomRight: Radius.elliptical(size.width / 2, 175));
-    List<Widget> pic = [
-      ClipRRect(
-        borderRadius: size.width <= 1007
-            ? const BorderRadius.only(
-                bottomLeft: Radius.elliptical(150, 80),
-                bottomRight: Radius.elliptical(150, 80),
-              )
-            : BorderRadius.circular(24),
-        child: Image.asset(
-          'assets/img/Photo4.jpg',
-          scale: 3.5,
+        var picBorderRad =size.width <= 1007
+              ? const BorderRadius.only(
+                  bottomLeft: Radius.circular(150),
+                  bottomRight: Radius.circular(150),
+                )
+              : BorderRadius.only(
+                topLeft: Radius.circular(32),
+                topRight: Radius.circular(32),
+                        bottomLeft: Radius.circular(32),
+                        bottomRight: Radius.elliptical(400, 450),
+              ); 
+    Widget pic =
+      Material(
+        borderRadius: picBorderRad,
+        elevation: 20,
+        shadowColor: Colors.black,
+        child: ClipRRect(
+          borderRadius: picBorderRad,
+          child: Image.asset(
+            'assets/img/Photo4.jpg',
+            scale: 3.5,
+            ),
         ),
-      ),
-    ];
+      );
     var txtAndSocial = [
       Column(
         crossAxisAlignment: size.width <= 1007
@@ -169,8 +179,9 @@ class _MyTopContainerState extends State<MyTopContainer> {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Container(
+            padding: EdgeInsets.only(bottom: 8),
             width: size.width,
-            height: size.height / 1.15,
+            // height: size.height / 1.15,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -190,7 +201,7 @@ class _MyTopContainerState extends State<MyTopContainer> {
             child: size.width <= 1007
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: pic..addAll(txtAndSocial),
+                    children: [pic, ...txtAndSocial],
                   )
                 : Padding(
                     padding: EdgeInsets.symmetric(
@@ -199,7 +210,7 @@ class _MyTopContainerState extends State<MyTopContainer> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: txtAndSocial..addAll(pic),
+                      children: txtAndSocial..add(pic),
                     ),
                   ),
           ),

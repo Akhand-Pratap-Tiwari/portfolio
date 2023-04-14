@@ -12,7 +12,9 @@ dependencies:
     sdk: flutter
   font_awesome_flutter: ^10.4.0
   lottie: ^2.3.2
+  smooth_page_indicator: ^1.0.1
   url_launcher: ^6.1.10
+  video_player: ^2.6.1
 
 dev_dependencies:
   flutter_test:
@@ -25,3 +27,4 @@ flutter:
     - assets/
     - assets/anim/
     - assets/img/
+    - assets/vids/

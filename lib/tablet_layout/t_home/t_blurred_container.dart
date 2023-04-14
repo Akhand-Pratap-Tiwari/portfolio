@@ -31,39 +31,42 @@ class _MyBlurredContainerState extends State<MyBlurredContainer> {
           borderRadius: borderRadius,
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            child: Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.indigo.withOpacity(0.5),
-                    Colors.cyan.withOpacity(0.5),
-                  ],
-                  stops: const [0, 1],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 800),
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.indigo.withOpacity(0.5),
+                      Colors.cyan.withOpacity(0.5),
+                    ],
+                    stops: const [0, 1],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: borderRadius,
                 ),
-                borderRadius: borderRadius,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.title,
-                    style: TextStyle(
-                      fontSize:
-                          Theme.of(context).textTheme.displayMedium!.fontSize,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.title,
+                      style: TextStyle(
+                        fontSize:
+                            Theme.of(context).textTheme.displayMedium!.fontSize,
+                      ),
                     ),
-                  ),
-                  const Divider(
-                    color: Colors.white,
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: widget.body,
-                  ),
-                ],
+                    const Divider(
+                      color: Colors.white,
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: widget.body,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
