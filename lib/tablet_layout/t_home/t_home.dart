@@ -141,7 +141,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
                 ),
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    debugPrint('debug1 :' + constraints.maxWidth.toString());
+                    // debugPrint('debug1 :' + constraints.maxWidth.toString());
                     return LottieBuilder.asset(
                     'assets/anim/ready.json',
                     height: constraints.maxWidth / 1.5,
@@ -186,7 +186,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
         body: LayoutBuilder(
           builder: (context, constraints) => VideoApp(
             videoHeight: constraints.maxWidth / 2,
-            description: Text('data'),
+            description: const Text('data'),
             gitHubUrl: 'https://github.com/Akhand-Pratap-Tiwari/Automatic-Extractive-Text-Summarization-using-TF-IDF',
             videoLink: 'assets/vids/gdsc_rec_app.mp4',
           ),
@@ -209,7 +209,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
                   selectedIndex = value;
                   Scrollable.ensureVisible(
                     keyList[value].currentContext!,
-                    duration: Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
                     curve: Curves.elasticOut,
                   );
                 },
@@ -254,12 +254,12 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
             ),
           ),
           SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             controller: _scrollController,
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 64.0),
+                  padding: const EdgeInsets.only(top: 64.0),
                   child: MyTopContainer(
                     key: keyList[0],
                   ),
@@ -305,14 +305,14 @@ class _SkillBadgeState extends State<SkillBadge> {
       borderRadius: _borderRadius,
       elevation: 20,
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 100),
+        duration: const Duration(milliseconds: 100),
         decoration: BoxDecoration(
           color: widget.index == 0
               ? Colors.blueGrey.shade900
               : widget.index == 2
-                  ? Color.fromARGB(255, 44, 57, 75)
+                  ? const Color.fromARGB(255, 44, 57, 75)
                   : widget.index == 6
-                      ? Color.fromARGB(255, 48, 0, 0)
+                      ? const Color.fromARGB(255, 48, 0, 0)
                       : widget.index == 12
                           ? Colors.deepPurple.shade900
                           : Colors.white,
@@ -321,10 +321,11 @@ class _SkillBadgeState extends State<SkillBadge> {
         child: InkWell(
           onTap: () {},
           onHover: (value) => setState(() {
-            if (value)
+            if (value) {
               _borderRadius = BorderRadius.circular(8);
-            else
+            } else {
               _borderRadius = BorderRadius.circular(32);
+            }
           }),
           child: ClipRRect(
             borderRadius: _borderRadius,

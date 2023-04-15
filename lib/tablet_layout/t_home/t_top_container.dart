@@ -56,7 +56,7 @@ class _MyTopContainerState extends State<MyTopContainer> {
                   bottomLeft: Radius.circular(150),
                   bottomRight: Radius.circular(150),
                 )
-              : BorderRadius.only(
+              : const BorderRadius.only(
                 topLeft: Radius.circular(32),
                 topRight: Radius.circular(32),
                         bottomLeft: Radius.circular(32),
@@ -179,7 +179,7 @@ class _MyTopContainerState extends State<MyTopContainer> {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Container(
-            padding: EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 8),
             width: size.width,
             // height: size.height / 1.15,
             decoration: BoxDecoration(

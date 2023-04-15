@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -78,19 +77,17 @@ class _VideoAppState extends State<VideoApp> {
                                 aspectRatio: _controller.value.aspectRatio < 1
                                     ? 1
                                     : _controller.value.aspectRatio,
-                                child: Container(
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: FloatingActionButton(
-                                        backgroundColor: Colors.black,
-                                        onPressed: () =>
-                                            _launchURL(widget.gitHubUrl!),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.github,
-                                          size: 32,
-                                        ),
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: FloatingActionButton(
+                                      backgroundColor: Colors.black,
+                                      onPressed: () =>
+                                          _launchURL(widget.gitHubUrl!),
+                                      child: const FaIcon(
+                                        FontAwesomeIcons.github,
+                                        size: 32,
                                       ),
                                     ),
                                   ),
@@ -120,9 +117,9 @@ class _VideoAppState extends State<VideoApp> {
                   : Container(),
             ),
           ),
-          Divider(color: Colors.transparent),
+          const Divider(color: Colors.transparent),
           Row(
-            children: [
+            children: const [
               Expanded(
                 child: Divider(
                   indent: 48,
@@ -140,7 +137,7 @@ class _VideoAppState extends State<VideoApp> {
               ),
             ],
           ),
-          Divider(color: Colors.transparent),
+          const Divider(color: Colors.transparent),
           widget.description,
         ],
       ),
