@@ -68,7 +68,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
       length: 6,
       vsync: this,
       animationDuration: const Duration(milliseconds: 100),
-    );
+    )..addListener(() {  });
 
     _scrollController = ScrollController()
       ..addListener(() {
@@ -187,8 +187,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
           builder: (context, constraints) => VideoApp(
             videoHeight: constraints.maxWidth / 2,
             description: Text('data'),
-            gitHubUrl:
-                'https://github.com/Akhand-Pratap-Tiwari/Automatic-Extractive-Text-Summarization-using-TF-IDF',
+            gitHubUrl: 'https://github.com/Akhand-Pratap-Tiwari/Automatic-Extractive-Text-Summarization-using-TF-IDF',
             videoLink: 'assets/vids/gdsc_rec_app.mp4',
           ),
         ),

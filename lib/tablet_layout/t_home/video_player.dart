@@ -42,7 +42,12 @@ class _VideoAppState extends State<VideoApp> {
     super.initState();
     _controller = VideoPlayerController.network(widget.videoLink)
       ..setLooping(true)
-      ..initialize().then((value) => setState((){}));
+      ..setVolume(0)
+      ..initialize()
+          // ..setVolume(0)
+          .then((value) => setState(() {
+                _controller.play();
+              }));
   }
 
   @override
