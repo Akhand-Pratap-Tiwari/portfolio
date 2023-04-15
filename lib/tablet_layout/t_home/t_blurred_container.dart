@@ -32,7 +32,7 @@ class _MyBlurredContainerState extends State<MyBlurredContainer> {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 800),
+              constraints: const BoxConstraints(maxWidth: 800),
               child: Container(
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
