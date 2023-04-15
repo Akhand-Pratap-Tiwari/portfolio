@@ -62,7 +62,7 @@ class _MyBlurredContainerState extends State<MyBlurredContainer> {
                       height: 10,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.fromLTRB(0, 16.0, 0, 0),
                       child: widget.body,
                     ),
                   ],

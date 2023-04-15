@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
 import 'package:portfolio/tablet_layout/t_home/t_top_container.dart';
 import 'package:portfolio/tablet_layout/t_home/video_player.dart';
@@ -68,7 +69,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
       length: 6,
       vsync: this,
       animationDuration: const Duration(milliseconds: 100),
-    )..addListener(() {  });
+    )..addListener(() {});
 
     _scrollController = ScrollController()
       ..addListener(() {
@@ -143,13 +144,14 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
                   builder: (context, constraints) {
                     // debugPrint('debug1 :' + constraints.maxWidth.toString());
                     return LottieBuilder.asset(
-                    'assets/anim/ready.json',
-                    height: constraints.maxWidth / 1.5,
-                    width: constraints.maxWidth / 1.5,
-                    alignment: Alignment.center,
-                    frameRate: FrameRate.max,
-                    reverse: true,
-                  );},
+                      'assets/anim/ready.json',
+                      height: constraints.maxWidth / 1.5,
+                      width: constraints.maxWidth / 1.5,
+                      alignment: Alignment.center,
+                      frameRate: FrameRate.max,
+                      reverse: true,
+                    );
+                  },
                 ),
               ),
             ),
@@ -184,18 +186,17 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
         key: keyList[3],
         title: 'Projects',
         body: LayoutBuilder(
-          builder: (context, constraints) => VideoApp(
-            videoHeight: constraints.maxWidth / 2,
-            description: const Text('data'),
-            gitHubUrl: 'https://github.com/Akhand-Pratap-Tiwari/Automatic-Extractive-Text-Summarization-using-TF-IDF',
-            videoLink: 'assets/vids/gdsc_rec_app.mp4',
-          ),
+          builder: (context, constraints) =>
+              ProjectView(constraints: constraints),
         ),
+      ),
+      MyBlurredContainer(
+        title: 'Work Exp. and Responsibilities',
+        body: Text('Data'),
       )
     ];
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(onPressed: (){}),
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64),
@@ -266,7 +267,6 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
                 ),
                 size.width ~/ 700 <= 1
                     ? Column(
-
                         children: widgetList,
                       )
                     : GridView.count(
@@ -330,6 +330,134 @@ class _SkillBadgeState extends State<SkillBadge> {
           child: ClipRRect(
             borderRadius: _borderRadius,
             child: Image.asset(_skillPaths[widget.index]),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ProjectView extends StatefulWidget {
+  final BoxConstraints constraints;
+
+  const ProjectView({super.key, required this.constraints});
+
+  @override
+  State<ProjectView> createState() => _ProjectViewState();
+}
+
+class _ProjectViewState extends State<ProjectView> {
+  List<List<String>> gitHubUrl_vidLink_title_descrption = [
+    [
+      'https://github.com/Akhand-Pratap-Tiwari/Project-Exhibition-Final',
+      'assets/vids/befap.mp4',
+      'Product Result Aggregator for Online Shopping (Jul 22 - Oct 22)',
+      '${' ' * 5}- Description: There are only two major platforms from where most of the Indians do online shopping and '
+          'those are Flipkart and Amazon. The most painful thing is to choose the correct product while also '
+          'comparing the choices from both the platforms. We made a website to ease it. It has following aims:\n\n'
+          '${' ' * 10}a- Fetch product from both platforms and present them at a single place.\n'
+          '${' ' * 10}b- Use AI to randomly sample reviews and make a simple summary out of them for the user.\n'
+          '${' ' * 10}c- Use AI to also determine the positivity of randomly sampled reviews.\n'
+          '${' ' * 10}d- A ranking system that can rank products using positivity of reviews, quantity of positive and negative reviews, price.\n\n'
+          '${' ' * 5}- Technology: HTML/CSS, JavaScript, ReactJS, MongoDB, Node.js, Python, numpy, scikit, nltk\n'
+          '${' ' * 5}- Team Project: 5 members\n'
+          '${' ' * 5}- Role: Project Lead with following responsibilities: System design and workflow, make the Ranking system, AI model for Review Summarization',
+    ],
+    [
+      'https://github.com/Akhand-Pratap-Tiwari/QT_Passenger',
+      'https://drive.google.com/uc?id=14QUxAu8iEVrI8-KeXy-JAuoPoIbzjlpq&export=download',
+      'Flexible Taxi App (Nov 22 - Feb 23)',
+      '${' ' * 5}- Description: We made a Taxi app that allows passengers to post a requirement about when and where they '
+          'want to go. Then on this requirement drivers can emit bids. Then the passenger can choose the appropriate '
+          'bid they want to accept. This increases the reachability of drivers and helps passengers to get a fair look at price.\n'
+          '${' ' * 5}- NOTE: This project works in conjunction with this project https://github.com/AkhandPratap-Tiwari/QT_Driver\n'
+          '${' ' * 5}- Technology: Flutter, Dart, Firebase, FlutterFire, FirebaseCLI\n'
+          '${' ' * 5}- Team Project: 5 members\n'
+          '${' ' * 5}- Role: Project Lead with following responsibilities: System Design, UX/UI design, Backend of Passenger side',
+    ],
+//     [
+//        'https://github.com/Akhand-Pratap-Tiwari/who-borrowed-what',
+//       'https://drive.google.com/uc?id=14QUxAu8iEVrI8-KeXy-JAuoPoIbzjlpq&export=download',
+//       'Who Borrowed What (Mar 10 - Ongoing)',
+//       '${' ' * 5}- Description: This was for my personal use and an exploratory project. I usually lend my notes, assignments'
+// 'and projects to my mates and tend to forget about those and then panic later. To solve this issue, I made'
+// 'an Android app for myself to keep track of objects that I have lent. My aim was also to explore the'
+// 'technology stack in depth as well and what new skills I can add to the arsenal.\n'
+// '${' ' * 5}- My further plan is to get this on the app store and then further integrate and use analytics tools to observe'
+// 'the traffic and potentially use AI/ML to derive some insights about the app. '
+//           '${' ' * 5}- Technology: Flutter, Dart, Firebase, FirebaseUI for Flutter, FirebaseCLI\n'
+//           '${' ' * 5}- Team Project: No\n'
+//           '${' ' * 5}- Role: From system design to final implementation.\n',
+//     ]
+  ];
+  PageController _pageController = PageController();
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint('debug2 :' + widget.constraints.toString());
+    return SizedBox(
+      width: widget.constraints.maxWidth,
+      height: widget.constraints.maxWidth + 18,
+      child: PageView.builder(
+        controller: _pageController,
+        itemCount: gitHubUrl_vidLink_title_descrption.length,
+        itemBuilder: (context, index) => SingleChildScrollView(
+          child: Column(
+            children: [
+              VideoApp(
+                videoHeight: widget.constraints.maxWidth / 2,
+                gitHubUrl: gitHubUrl_vidLink_title_descrption[index][0],
+                videoLink: gitHubUrl_vidLink_title_descrption[index][1],
+              ),
+              const Divider(color: Colors.transparent),
+              Row(
+                children: [
+                  index == 0
+                      ? Container()
+                      : FloatingActionButton(
+                          onPressed: () => _pageController.previousPage(
+                              duration: Duration(milliseconds: 250),
+                              curve: Curves.easeInToLinear),
+                          child: const Icon(Icons.chevron_left_rounded),
+                          backgroundColor: Colors.black26,
+                        ),
+                  const Expanded(
+                    child: Divider(
+                      indent: 8,
+                      endIndent: 8,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    gitHubUrl_vidLink_title_descrption[index][2],
+                    style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18,
+                        color: Colors.teal.shade300),
+                  ),
+                  const Expanded(
+                    child: Divider(
+                      indent: 8,
+                      endIndent: 8,
+                      color: Colors.white,
+                    ),
+                  ),
+                  index == gitHubUrl_vidLink_title_descrption.length - 1
+                      ? Container()
+                      : FloatingActionButton(
+                          onPressed: () => _pageController.nextPage(
+                            duration: Duration(milliseconds: 250),
+                            curve: Curves.easeInToLinear,
+                          ),
+                          child: const Icon(Icons.chevron_right_rounded),
+                          backgroundColor: Colors.black26,
+                        ),
+                ],
+              ),
+              const Divider(color: Colors.transparent),
+              Text(gitHubUrl_vidLink_title_descrption[index][3])
+              // widget.description
+            ],
           ),
         ),
       ),
