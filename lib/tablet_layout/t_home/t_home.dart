@@ -1,16 +1,12 @@
-import 'dart:html';
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:portfolio/tablet_layout/t_home/t_top_container.dart';
 import 'package:portfolio/tablet_layout/t_home/video_player.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 't_blurred_container.dart';
@@ -251,7 +247,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
           borderRadius: BorderRadius.circular(16),
           color: Colors.black,
         ),
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
@@ -265,7 +261,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
             ),
           )..insert(
               1,
-              SizedBox(
+              const SizedBox(
                 width: 50,
                 child: Divider(),
               ),
@@ -338,7 +334,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
               child: ValueListenableBuilder<int>(
                 valueListenable: selectedIndex,
                 builder: (context, value, child) => AnimatedSwitcher(
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   child: LottieBuilder.asset(
                     bgAnim[value <= 1
                         ? 0
@@ -453,7 +449,7 @@ class ProjectView extends StatefulWidget {
 }
 
 class _ProjectViewState extends State<ProjectView> {
-  List<List<String>> gitHubUrl_vidLink_title_descrption = [
+  List<List<String>> gitVidTitlDesc = [
     [
       'https://github.com/Akhand-Pratap-Tiwari/Project-Exhibition-Final',
       'assets/vids/befap.mp4',
@@ -496,7 +492,7 @@ class _ProjectViewState extends State<ProjectView> {
 //           '${' ' * 5}- Role: From system design to final implementation.\n',
 //     ]
   ];
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -510,14 +506,14 @@ class _ProjectViewState extends State<ProjectView> {
           child: PageView.builder(
             // physics: BouncingScrollPhysics(),
             controller: _pageController,
-            itemCount: gitHubUrl_vidLink_title_descrption.length,
+            itemCount: gitVidTitlDesc.length,
             itemBuilder: (context, index) => SingleChildScrollView(
               child: Column(
                 children: [
                   VideoApp(
                     videoHeight: widget.constraints.maxWidth / 2,
-                    gitHubUrl: gitHubUrl_vidLink_title_descrption[index][0],
-                    videoLink: gitHubUrl_vidLink_title_descrption[index][1],
+                    gitHubUrl: gitVidTitlDesc[index][0],
+                    videoLink: gitVidTitlDesc[index][1],
                   ),
                   const Divider(color: Colors.transparent),
                   const Divider(color: Colors.transparent),
@@ -533,7 +529,7 @@ class _ProjectViewState extends State<ProjectView> {
                         ),
                       ),
                       Text(
-                        gitHubUrl_vidLink_title_descrption[index][2],
+                        gitVidTitlDesc[index][2],
                         style: TextStyle(
                             fontWeight: FontWeight.w900,
                             fontSize: 18,
@@ -549,7 +545,7 @@ class _ProjectViewState extends State<ProjectView> {
                     ],
                   ),
                   const Divider(color: Colors.transparent),
-                  Text(gitHubUrl_vidLink_title_descrption[index][3])
+                  Text(gitVidTitlDesc[index][3])
                   // widget.description
                 ],
               ),
@@ -565,31 +561,31 @@ class _ProjectViewState extends State<ProjectView> {
                 onPressed: () {
                   // debugPrint('debug3 :' +_pageController.page.toString());
                   _pageController.previousPage(
-                      duration: Duration(milliseconds: 250),
+                      duration: const Duration(milliseconds: 250),
                       curve: Curves.easeInToLinear);
                 },
-                child: const Icon(Icons.chevron_left_rounded),
                 backgroundColor: Colors.white.withOpacity(0.5),
+                child: const Icon(Icons.chevron_left_rounded),
               ),
               // AnimatedSmoothIndicator(activeIndex: activeIndex, count: count)
               SmoothPageIndicator(
-                effect: ExpandingDotsEffect(
+                effect: const ExpandingDotsEffect(
                   dotColor: Colors.white,
                   activeDotColor: Colors.black,
                 ),
                 controller: _pageController,
-                count: gitHubUrl_vidLink_title_descrption.length,
+                count: gitVidTitlDesc.length,
               ),
               FloatingActionButton(
                 onPressed: () {
                   // debugPrint('debug3 :'+_pageController.page.toString());
                   _pageController.nextPage(
-                    duration: Duration(milliseconds: 250),
+                    duration: const Duration(milliseconds: 250),
                     curve: Curves.easeInToLinear,
                   );
                 },
-                child: const Icon(Icons.chevron_right_rounded),
                 backgroundColor: Colors.white.withOpacity(0.5),
+                child: const Icon(Icons.chevron_right_rounded),
               ),
             ],
           ),

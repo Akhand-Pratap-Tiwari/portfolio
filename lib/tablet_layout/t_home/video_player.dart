@@ -114,7 +114,7 @@ class _VideoAppState extends State<VideoApp> {
                     ),
                   ],
                 )
-              : CircularProgressIndicator(),
+              : const CircularProgressIndicator(),
         ),
       ),
     );
