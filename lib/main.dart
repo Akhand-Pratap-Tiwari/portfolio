@@ -18,10 +18,14 @@ class MainApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.dark, 
+        brightness: Brightness.dark,
       ),
       themeMode: ThemeMode.system,
       home: const Home(),
+      
+    // TODO: Code Organizatino and Breakup
+    // TODO: Setup Mobile Layout
+    // TODO: Remove Print Statements
     );
   }
 }

@@ -68,6 +68,8 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
   // int selectedIndex = 0;
 
   ValueNotifier<int> selectedIndex = ValueNotifier(0);
+  
+  Color _tabBarColor = Colors.pinkAccent;
   @override
   void initState() {
     keyList = List.generate(_tabNames.length, (index) => GlobalKey());
@@ -80,6 +82,16 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
 
     _scrollController = ScrollController()
       ..addListener(() {
+        if(_scrollController.offset == 0) {
+          setState(() {
+          _tabBarColor = Colors.pinkAccent;
+        });
+        } else if(_tabBarColor != Colors.black45) {
+          setState(() {
+          _tabBarColor = Colors.black45;
+        });
+        }
+
         if (_scrollController.position.userScrollDirection ==
                 ScrollDirection.reverse &&
             selectedIndex.value < keyList.length - 1) {
@@ -282,10 +294,15 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
         preferredSize: const Size.fromHeight(64),
         child: ClipRRect(
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Material(
-              color: Colors.black38,
+              elevation: 20,
+              color: _tabBarColor,
               child: TabBar(
+                
+                indicatorColor: Colors.transparent,
+                dividerColor: Colors.transparent,
+                automaticIndicatorColorAdjustment: true,
                 onTap: (value) {
                   selectedIndex.value = value;
                   Scrollable.ensureVisible(
@@ -325,30 +342,25 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
-          SizedBox(
-            width: size.width,
-            height: size.height,
-            child: FittedBox(
-              fit: BoxFit.cover,
-              // color: Colors.red,
-              child: ValueListenableBuilder<int>(
-                valueListenable: selectedIndex,
-                builder: (context, value, child) => AnimatedSwitcher(
-                  duration: const Duration(seconds: 1),
-                  child: LottieBuilder.asset(
-                    bgAnim[value <= 1
-                        ? 0
-                        : value <= 3
-                            ? 1
-                            : 2],
-                    key: ValueKey(value <= 1
-                        ? 0
-                        : value <= 3
-                            ? 1
-                            : 2),
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
+          ValueListenableBuilder<int>(
+            valueListenable: selectedIndex,
+            builder: (context, value, child) => AnimatedSwitcher(
+              
+              duration: const Duration(seconds: 1),
+              child: LottieBuilder.asset(
+                bgAnim[value <= 1
+                    ? 0
+                    : value <= 3
+                        ? 1
+                        : 2],
+                key: ValueKey(value <= 1
+                    ? 0
+                    : value <= 3
+                        ? 1
+                        : 2),
+                fit: BoxFit.cover,
+                height: size.height,
+                width: size.width,
               ),
             ),
           ),

@@ -53,8 +53,10 @@ class _MyTopContainerState extends State<MyTopContainer> {
         bottomRight: Radius.elliptical(size.width / 2, 175));
         var picBorderRad =size.width <= 1007
               ? const BorderRadius.only(
-                  bottomLeft: Radius.circular(150),
-                  bottomRight: Radius.circular(150),
+                topLeft: Radius.circular(32),
+                topRight: Radius.circular(32),
+                  bottomLeft: Radius.circular(32),
+                  bottomRight: Radius.circular(32),
                 )
               : const BorderRadius.only(
                 topLeft: Radius.circular(32),
@@ -185,12 +187,13 @@ class _MyTopContainerState extends State<MyTopContainer> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.pink.withOpacity(0.7),
-                  Colors.deepPurple.withOpacity(0.9)
+                  Colors.pinkAccent,
+                  // Colors.black38,
+                  Colors.deepPurple.withOpacity(0.7),
                 ],
                 stops: const [0, 1],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
               borderRadius: size.width >= 1007
                   ? BorderRadius.only(
