@@ -1,11 +1,17 @@
+import 'dart:html';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:portfolio/tablet_layout/t_home/t_top_container.dart';
 import 'package:portfolio/tablet_layout/t_home/video_player.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 't_blurred_container.dart';
 
@@ -40,42 +46,45 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
       '\nAlthough I can build Mobile Apps, Websites and Desktop Apps using Flutter but my forte is Mobile App development. '
       '\n\nI am also a good team player as I am able to lead a team as well as work as supporting member too. ';
 
+  ///Tabs here
   final List<String> _tabNames = [
     'Home',
     'About',
     'Skills',
     'Projects',
     'Work Exp.',
-    'Contact',
   ];
+
+  final String expAndRes =
+      '- Leader of group in project exhibition in 2 consecutive sems.\n'
+      '- Speaker at Flutter Forward event.\n'
+      '- Speaker at GDSC Techathon Event.\n'
+      '- Android Core Team Member of Google Developer Students Club (VIT, Bhopal)\n'
+      '- Member of UX/UI design team of new LINUX distro.\n'
+      '- Member of UX/UI design team of a new malnutrition tracking app.\n'
+      '- GitHub Contributor at GDSC VIT, Bhopal organization';
 
   late TabController _tabController;
   late ScrollController _scrollController;
 
-  var key0 = GlobalKey();
-  var key1 = GlobalKey();
-  var key2 = GlobalKey();
-  var key3 = GlobalKey();
-  var key4 = GlobalKey();
-  var key5 = GlobalKey();
-  late final List<GlobalKey> keyList;
+  late List<GlobalKey<State<StatefulWidget>>> keyList;
 
   int selectedIndex = 0;
   @override
   void initState() {
-    keyList = [key0, key1, key2, key3, key4, key5];
+    keyList = List.generate(_tabNames.length, (index) => GlobalKey());
 
     _tabController = TabController(
-      length: 6,
+      length: keyList.length,
       vsync: this,
       animationDuration: const Duration(milliseconds: 100),
-    )..addListener(() {});
+    );
 
     _scrollController = ScrollController()
       ..addListener(() {
         if (_scrollController.position.userScrollDirection ==
                 ScrollDirection.reverse &&
-            selectedIndex < 3) {
+            selectedIndex < keyList.length - 1) {
           RenderBox box = keyList[selectedIndex + 1]
               .currentContext!
               .findRenderObject() as RenderBox;
@@ -105,8 +114,32 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
     super.initState();
   }
 
+  _launchURL(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  final List<dynamic> _contactBar = [
+    [
+      'mailto:akdevstudios100@gmail.com',
+      Icons.mail_rounded,
+      Colors.white,
+    ],
+    [
+      'tel://+917309040494',
+      Icons.call,
+      Colors.white,
+    ]
+  ];
+
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     // var keyList = List.filled(4, GlobalKey());
     List<Widget> widgetList = [
       MyBlurredContainer(
@@ -191,20 +224,69 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
         ),
       ),
       MyBlurredContainer(
+        key: keyList[4],
         title: 'Work Exp. and Responsibilities',
-        body: Text('Data'),
-      )
+        body: Align(
+          alignment: Alignment.center,
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              LottieBuilder.asset('assets/anim/experience.json'),
+              Text(
+                expAndRes,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ],
+          ),
+        ),
+      ),
     ];
-    var size = MediaQuery.of(context).size;
+
+    var contactBar = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: Colors.black,
+        ),
+        padding: EdgeInsets.all(8),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(
+            _contactBar.length,
+            (index) => IconButton(
+              onPressed: () => _launchURL(_contactBar[index][0]),
+              icon: FaIcon(_contactBar[index][1]),
+              iconSize: 30,
+              color: _contactBar[index][2],
+            ),
+          )..insert(
+              1,
+              SizedBox(
+                width: 50,
+                child: Divider(),
+              ),
+            ),
+        ),
+      ),
+    );
+    List<String> bgAnim = [
+      'assets/anim/waves.json',
+      'assets/anim/liquidBg.json',
+      'assets/anim/sparkles.json',
+    ];
     return Scaffold(
+      extendBody: true,
+      // bottomNavigationBar: contactBar,
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64),
         child: ClipRRect(
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
             child: Material(
-              color: Colors.black45,
+              color: Colors.black38,
               child: TabBar(
                 onTap: (value) {
                   selectedIndex = value;
@@ -225,7 +307,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
                 labelStyle: Theme.of(context).textTheme.bodyLarge,
                 splashBorderRadius: BorderRadius.circular(48),
                 tabs: List.generate(
-                  6,
+                  keyList.length,
                   (index) => Center(
                     child: Tab(
                       child: Center(
@@ -248,12 +330,27 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
           SizedBox(
             width: size.width,
             height: size.height,
-            // color: Colors.red,
-            child: LottieBuilder.asset(
-              'assets/anim/waves.json',
-              fit: BoxFit.fitWidth,
+            child: FittedBox(
+              fit: BoxFit.cover,
+              // color: Colors.red,
+              child: 
+              // ValueListenableBuilder<int>(
+              //   valueListenable: selectedIndex,
+              //   builder: (context, value, child) => 
+                LottieBuilder.asset(
+
+                  bgAnim[0
+                    // value <= 1
+                    //   ? 0
+                    //   : value <= 3
+                    //       ? 1
+                    //       : 2
+                          ],
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
             ),
-          ),
+          
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             controller: _scrollController,
@@ -281,6 +378,10 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
               ],
             ),
           ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: contactBar,
+          )
         ],
       ),
     );
@@ -394,73 +495,101 @@ class _ProjectViewState extends State<ProjectView> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('debug2 :' + widget.constraints.toString());
-    return SizedBox(
-      width: widget.constraints.maxWidth,
-      height: widget.constraints.maxWidth + 18,
-      child: PageView.builder(
-        controller: _pageController,
-        itemCount: gitHubUrl_vidLink_title_descrption.length,
-        itemBuilder: (context, index) => SingleChildScrollView(
-          child: Column(
-            children: [
-              VideoApp(
-                videoHeight: widget.constraints.maxWidth / 2,
-                gitHubUrl: gitHubUrl_vidLink_title_descrption[index][0],
-                videoLink: gitHubUrl_vidLink_title_descrption[index][1],
-              ),
-              const Divider(color: Colors.transparent),
-              Row(
+    // debugPrint('debug2 :' + widget.constraints.toString());
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        SizedBox(
+          width: widget.constraints.maxWidth,
+          height: widget.constraints.maxWidth + 18,
+          child: PageView.builder(
+            // physics: BouncingScrollPhysics(),
+            controller: _pageController,
+            itemCount: gitHubUrl_vidLink_title_descrption.length,
+            itemBuilder: (context, index) => SingleChildScrollView(
+              child: Column(
                 children: [
-                  index == 0
-                      ? Container()
-                      : FloatingActionButton(
-                          onPressed: () => _pageController.previousPage(
-                              duration: Duration(milliseconds: 250),
-                              curve: Curves.easeInToLinear),
-                          child: const Icon(Icons.chevron_left_rounded),
-                          backgroundColor: Colors.black26,
+                  VideoApp(
+                    videoHeight: widget.constraints.maxWidth / 2,
+                    gitHubUrl: gitHubUrl_vidLink_title_descrption[index][0],
+                    videoLink: gitHubUrl_vidLink_title_descrption[index][1],
+                  ),
+                  const Divider(color: Colors.transparent),
+                  const Divider(color: Colors.transparent),
+                  // const Divider(color: Colors.transparent),
+                  // const Divider(color: Colors.transparent),
+                  Row(
+                    children: [
+                      const Expanded(
+                        child: Divider(
+                          indent: 8,
+                          endIndent: 8,
+                          color: Colors.white,
                         ),
-                  const Expanded(
-                    child: Divider(
-                      indent: 8,
-                      endIndent: 8,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    gitHubUrl_vidLink_title_descrption[index][2],
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 18,
-                        color: Colors.teal.shade300),
-                  ),
-                  const Expanded(
-                    child: Divider(
-                      indent: 8,
-                      endIndent: 8,
-                      color: Colors.white,
-                    ),
-                  ),
-                  index == gitHubUrl_vidLink_title_descrption.length - 1
-                      ? Container()
-                      : FloatingActionButton(
-                          onPressed: () => _pageController.nextPage(
-                            duration: Duration(milliseconds: 250),
-                            curve: Curves.easeInToLinear,
-                          ),
-                          child: const Icon(Icons.chevron_right_rounded),
-                          backgroundColor: Colors.black26,
+                      ),
+                      Text(
+                        gitHubUrl_vidLink_title_descrption[index][2],
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18,
+                            color: Colors.teal.shade300),
+                      ),
+                      const Expanded(
+                        child: Divider(
+                          indent: 8,
+                          endIndent: 8,
+                          color: Colors.white,
                         ),
+                      ),
+                    ],
+                  ),
+                  const Divider(color: Colors.transparent),
+                  Text(gitHubUrl_vidLink_title_descrption[index][3])
+                  // widget.description
                 ],
               ),
-              const Divider(color: Colors.transparent),
-              Text(gitHubUrl_vidLink_title_descrption[index][3])
-              // widget.description
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 24, 8, 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              FloatingActionButton(
+                onPressed: () {
+                  // debugPrint('debug3 :' +_pageController.page.toString());
+                  _pageController.previousPage(
+                      duration: Duration(milliseconds: 250),
+                      curve: Curves.easeInToLinear);
+                },
+                child: const Icon(Icons.chevron_left_rounded),
+                backgroundColor: Colors.white.withOpacity(0.5),
+              ),
+              // AnimatedSmoothIndicator(activeIndex: activeIndex, count: count)
+              SmoothPageIndicator(
+                effect: ExpandingDotsEffect(
+                  dotColor: Colors.white,
+                  activeDotColor: Colors.black,
+                ),
+                controller: _pageController,
+                count: gitHubUrl_vidLink_title_descrption.length,
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  // debugPrint('debug3 :'+_pageController.page.toString());
+                  _pageController.nextPage(
+                    duration: Duration(milliseconds: 250),
+                    curve: Curves.easeInToLinear,
+                  );
+                },
+                child: const Icon(Icons.chevron_right_rounded),
+                backgroundColor: Colors.white.withOpacity(0.5),
+              ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }
