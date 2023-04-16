@@ -69,7 +69,9 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
 
   late List<GlobalKey<State<StatefulWidget>>> keyList;
 
-  int selectedIndex = 0;
+  // int selectedIndex = 0;
+
+  ValueNotifier<int> selectedIndex = ValueNotifier(0);
   @override
   void initState() {
     keyList = List.generate(_tabNames.length, (index) => GlobalKey());
@@ -84,8 +86,8 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
       ..addListener(() {
         if (_scrollController.position.userScrollDirection ==
                 ScrollDirection.reverse &&
-            selectedIndex < keyList.length - 1) {
-          RenderBox box = keyList[selectedIndex + 1]
+            selectedIndex.value < keyList.length - 1) {
+          RenderBox box = keyList[selectedIndex.value + 1]
               .currentContext!
               .findRenderObject() as RenderBox;
           Offset position = box.localToGlobal(Offset.zero);
@@ -93,12 +95,12 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
           if (position.dy <= 64) {
             debugPrint('$selectedIndex');
             ++_tabController.index;
-            ++selectedIndex;
+            ++selectedIndex.value;
           }
         } else if (_scrollController.position.userScrollDirection ==
                 ScrollDirection.forward &&
-            selectedIndex > 0) {
-          RenderBox box = keyList[selectedIndex - 1]
+            selectedIndex.value > 0) {
+          RenderBox box = keyList[selectedIndex.value - 1]
               .currentContext!
               .findRenderObject() as RenderBox;
           Offset position = box.localToGlobal(Offset.zero);
@@ -106,7 +108,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
           if (box.size.height / 2 + position.dy >= 64) {
             debugPrint('$selectedIndex');
             --_tabController.index;
-            --selectedIndex;
+            --selectedIndex.value;
           }
         }
       });
@@ -277,7 +279,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
       'assets/anim/sparkles.json',
     ];
     return Scaffold(
-      extendBody: true,
+      // extendBody: true,
       // bottomNavigationBar: contactBar,
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
@@ -289,7 +291,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
               color: Colors.black38,
               child: TabBar(
                 onTap: (value) {
-                  selectedIndex = value;
+                  selectedIndex.value = value;
                   Scrollable.ensureVisible(
                     keyList[value].currentContext!,
                     duration: const Duration(seconds: 1),
@@ -333,24 +335,27 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
             child: FittedBox(
               fit: BoxFit.cover,
               // color: Colors.red,
-              child: 
-              // ValueListenableBuilder<int>(
-              //   valueListenable: selectedIndex,
-              //   builder: (context, value, child) => 
-                LottieBuilder.asset(
-
-                  bgAnim[0
-                    // value <= 1
-                    //   ? 0
-                    //   : value <= 3
-                    //       ? 1
-                    //       : 2
-                          ],
-                  fit: BoxFit.fitWidth,
+              child: ValueListenableBuilder<int>(
+                valueListenable: selectedIndex,
+                builder: (context, value, child) => AnimatedSwitcher(
+                  duration: Duration(seconds: 1),
+                  child: LottieBuilder.asset(
+                    bgAnim[value <= 1
+                        ? 0
+                        : value <= 3
+                            ? 1
+                            : 2],
+                    key: ValueKey(value <= 1
+                        ? 0
+                        : value <= 3
+                            ? 1
+                            : 2),
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
               ),
             ),
-          
+          ),
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             controller: _scrollController,

@@ -185,8 +185,8 @@ class _MyTopContainerState extends State<MyTopContainer> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.pinkAccent.withOpacity(0.3),
-                  Colors.blue.withOpacity(0.7)
+                  Colors.pink.withOpacity(0.7),
+                  Colors.deepPurple.withOpacity(0.9)
                 ],
                 stops: const [0, 1],
                 begin: Alignment.topLeft,
