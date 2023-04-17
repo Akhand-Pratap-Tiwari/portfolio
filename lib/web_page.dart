@@ -4,45 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
-import 'package:portfolio/tablet_layout/t_home/t_top_container.dart';
+import 'package:portfolio/home/home.dart';
 import 'package:portfolio/tablet_layout/t_home/video_player.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 't_blurred_container.dart';
+import 'meta.dart';
+import 'global_common_widgets/blurred_container.dart';
 
-final List<String> _skillPaths = [
-  'assets/img/cpp.jpg',
-  'assets/img/c.png',
-  'assets/img/firebase.png',
-  'assets/img/flutter.jpg',
-  'assets/img/gcp.png',
-  'assets/img/github.png',
-  'assets/img/illustrator.png',
-  'assets/img/python.png',
-  'assets/img/sql.jpg',
-  'assets/img/inkscape.png',
-  'assets/img/desmos.jpg',
-  'assets/img/dart.png',
-  'assets/img/ai.jpg'
-];
-
-class THome extends StatefulWidget {
-  const THome({super.key});
+class WebPage extends StatefulWidget {
+  const WebPage({super.key});
 
   @override
-  State<THome> createState() => _THomeState();
+  State<WebPage> createState() => _WebPageState();
 }
 
-class _THomeState extends State<THome> with TickerProviderStateMixin {
-  final String _intro1 =
-      'I am a Cross-platform Flutter-App developer from U.P., India. I am currently pursuing my B.Tech CSE [Core] from VIT, Bhopal. '
-      '\n\nBeing passionate about improving my coding skills, developing new applications and exploring new technologies I always look forward to take leap into the unexplored.\n';
-  final String _intro2 =
-      '\nAlthough I can build Mobile Apps, Websites and Desktop Apps using Flutter but my forte is Mobile App development. '
-      '\n\nI am also a good team player as I am able to lead a team as well as work as supporting member too. ';
-
-  ///Tabs here
+class _WebPageState extends State<WebPage> with TickerProviderStateMixin {
   final List<String> _tabNames = [
     'Home',
     'About',
@@ -51,25 +28,13 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
     'Work Exp.',
   ];
 
-  final String expAndRes =
-      '- Leader of group in project exhibition in 2 consecutive sems.\n'
-      '- Speaker at Flutter Forward event.\n'
-      '- Speaker at GDSC Techathon Event.\n'
-      '- Android Core Team Member of Google Developer Students Club (VIT, Bhopal)\n'
-      '- Member of UX/UI design team of new LINUX distro.\n'
-      '- Member of UX/UI design team of a new malnutrition tracking app.\n'
-      '- GitHub Contributor at GDSC VIT, Bhopal organization';
-
   late TabController _tabController;
   late ScrollController _scrollController;
-
   late List<GlobalKey<State<StatefulWidget>>> keyList;
 
-  // int selectedIndex = 0;
-
   ValueNotifier<int> selectedIndex = ValueNotifier(0);
-  
   Color _tabBarColor = Colors.pinkAccent;
+
   @override
   void initState() {
     keyList = List.generate(_tabNames.length, (index) => GlobalKey());
@@ -77,19 +42,19 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
     _tabController = TabController(
       length: keyList.length,
       vsync: this,
-      animationDuration: const Duration(milliseconds: 100),
+      animationDuration: const Duration(milliseconds: 250),
     );
 
     _scrollController = ScrollController()
       ..addListener(() {
-        if(_scrollController.offset == 0) {
+        if (_scrollController.offset == 0) {
           setState(() {
-          _tabBarColor = Colors.pinkAccent;
-        });
-        } else if(_tabBarColor != Colors.black45) {
+            _tabBarColor = Colors.pinkAccent;
+          });
+        } else if (_tabBarColor != Colors.black45) {
           setState(() {
-          _tabBarColor = Colors.black45;
-        });
+            _tabBarColor = Colors.black45;
+          });
         }
 
         if (_scrollController.position.userScrollDirection ==
@@ -172,7 +137,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
                       color: Colors.lightBlueAccent,
                     ),
                   ),
-                  TextSpan(text: _intro1),
+                  TextSpan(text: intro1),
                 ],
               ),
             ),
@@ -199,7 +164,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
               ),
             ),
             Text(
-              _intro2,
+              intro2,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
@@ -218,7 +183,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
             mainAxisSpacing: 32,
             crossAxisSpacing: 32,
             children: List.generate(
-                _skillPaths.length,
+                skillPaths.length,
                 (index) => SkillBadge(
                       index: index,
                     )),
@@ -299,7 +264,6 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
               elevation: 20,
               color: _tabBarColor,
               child: TabBar(
-                
                 indicatorColor: Colors.transparent,
                 dividerColor: Colors.transparent,
                 automaticIndicatorColorAdjustment: true,
@@ -345,7 +309,6 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
           ValueListenableBuilder<int>(
             valueListenable: selectedIndex,
             builder: (context, value, child) => AnimatedSwitcher(
-              
               duration: const Duration(seconds: 1),
               child: LottieBuilder.asset(
                 bgAnim[value <= 1
@@ -371,7 +334,7 @@ class _THomeState extends State<THome> with TickerProviderStateMixin {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 64.0),
-                  child: MyTopContainer(
+                  child: Home(
                     key: keyList[0],
                   ),
                 ),
@@ -443,7 +406,7 @@ class _SkillBadgeState extends State<SkillBadge> {
           }),
           child: ClipRRect(
             borderRadius: _borderRadius,
-            child: Image.asset(_skillPaths[widget.index]),
+            child: Image.asset(skillPaths[widget.index]),
           ),
         ),
       ),
