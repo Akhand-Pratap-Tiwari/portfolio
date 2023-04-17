@@ -9,6 +9,7 @@ import 'package:portfolio/tablet_layout/t_home/video_player.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'about/about.dart';
 import 'meta.dart';
 import 'global_common_widgets/blurred_container.dart';
 
@@ -66,7 +67,7 @@ class _WebPageState extends State<WebPage> with TickerProviderStateMixin {
           Offset position = box.localToGlobal(Offset.zero);
           //this is global position
           if (position.dy <= 64) {
-            debugPrint('$selectedIndex');
+            // debugPrint('$selectedIndex');
             ++_tabController.index;
             ++selectedIndex.value;
           }
@@ -79,7 +80,7 @@ class _WebPageState extends State<WebPage> with TickerProviderStateMixin {
           Offset position = box.localToGlobal(Offset.zero);
           //this is global position
           if (box.size.height / 2 + position.dy >= 64) {
-            debugPrint('$selectedIndex');
+            // debugPrint('$selectedIndex');
             --_tabController.index;
             --selectedIndex.value;
           }
@@ -121,54 +122,7 @@ class _WebPageState extends State<WebPage> with TickerProviderStateMixin {
         key: keyList[1],
         // animation: 'assets/anim/development.json',
         title: 'About Me',
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            RichText(
-              text: TextSpan(
-                style: Theme.of(context).textTheme.bodyLarge,
-                children: [
-                  const TextSpan(text: 'Hello! I am, '),
-                  const TextSpan(
-                    text: 'Akhand P. Tiwari. ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.lightBlueAccent,
-                    ),
-                  ),
-                  TextSpan(text: intro1),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: Colors.black45,
-                ),
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    // debugPrint('debug1 :' + constraints.maxWidth.toString());
-                    return LottieBuilder.asset(
-                      'assets/anim/ready.json',
-                      height: constraints.maxWidth / 1.5,
-                      width: constraints.maxWidth / 1.5,
-                      alignment: Alignment.center,
-                      frameRate: FrameRate.max,
-                      reverse: true,
-                    );
-                  },
-                ),
-              ),
-            ),
-            Text(
-              intro2,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ],
-        ),
+        body: AboutMe(),
       ),
       MyBlurredContainer(
         key: keyList[2],
@@ -261,7 +215,7 @@ class _WebPageState extends State<WebPage> with TickerProviderStateMixin {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Material(
-              elevation: 20,
+              elevation: 10,
               color: _tabBarColor,
               child: TabBar(
                 indicatorColor: Colors.transparent,
@@ -363,6 +317,7 @@ class _WebPageState extends State<WebPage> with TickerProviderStateMixin {
     );
   }
 }
+
 
 class SkillBadge extends StatefulWidget {
   final int index;

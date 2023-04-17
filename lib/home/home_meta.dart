@@ -40,13 +40,13 @@ final List<dynamic> typerAnimatedTextList = [
   ],
 ];
 
-class WidgetInfo {
+class HomeWidgetInfo {
   Size thisSize;
   BorderRadius circularBorderRadius = BorderRadius.circular(32);
   late BorderRadius circularBorderRadius2;
   late BorderRadius containerBorderRadius;
 
-  WidgetInfo({required this.thisSize}) {
+  HomeWidgetInfo({required this.thisSize}) {
     updateSize(thisSize);
   }
 

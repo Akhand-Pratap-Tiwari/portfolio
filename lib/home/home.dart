@@ -30,15 +30,15 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    WidgetInfo widInfo = WidgetInfo(thisSize: size);
+    HomeWidgetInfo homeWidInfo = HomeWidgetInfo(thisSize: size);
 
     List<Widget> picAndTxt = [
       Material(
-        borderRadius: widInfo.circularBorderRadius,
+        borderRadius: homeWidInfo.circularBorderRadius,
         elevation: 20,
         shadowColor: Colors.black,
         child: ClipRRect(
-          borderRadius: widInfo.circularBorderRadius,
+          borderRadius: homeWidInfo.circularBorderRadius,
           child: Image.asset(
             'assets/img/Photo4.jpg',
             scale: 3.5,
@@ -119,13 +119,13 @@ class _HomeState extends State<Home> {
 
     return Material(
       color: Colors.transparent,
-      borderRadius: widInfo.containerBorderRadius,
+      borderRadius: homeWidInfo.containerBorderRadius,
       elevation: 10,
       child: Stack(
         alignment: Alignment.topRight,
         children: [
           ClipRRect(
-            borderRadius: widInfo.containerBorderRadius,
+            borderRadius: homeWidInfo.containerBorderRadius,
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
               child: Container(
@@ -140,7 +140,7 @@ class _HomeState extends State<Home> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
-                  borderRadius: widInfo.containerBorderRadius,
+                  borderRadius: homeWidInfo.containerBorderRadius,
                 ),
                 child: isTablet || isMobile
                     ? Column(

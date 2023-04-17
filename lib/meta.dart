@@ -14,14 +14,7 @@ final List<String> skillPaths = [
   'assets/img/ai.jpg'
 ];
 
-final String intro1 =
-    'I am a Cross-platform Flutter-App developer from U.P., India. I am currently pursuing my B.Tech CSE [Core] from VIT, Bhopal. '
-    '\n\nBeing passionate about improving my coding skills, developing new applications and exploring new technologies I always look forward to take leap into the unexplored.\n';
-final String intro2 =
-    '\nAlthough I can build Mobile Apps, Websites and Desktop Apps using Flutter but my forte is Mobile App development. '
-    '\n\nI am also a good team player as I am able to lead a team as well as work as supporting member too. ';
-
-///Tabs here
+ ///Tabs here
 
 final String expAndRes =
     '- Leader of group in project exhibition in 2 consecutive sems.\n'
