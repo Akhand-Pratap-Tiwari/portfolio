@@ -1,18 +1,4 @@
-final List<String> skillPaths = [
-  'assets/img/cpp.jpg',
-  'assets/img/c.png',
-  'assets/img/firebase.png',
-  'assets/img/flutter.jpg',
-  'assets/img/gcp.png',
-  'assets/img/github.png',
-  'assets/img/illustrator.png',
-  'assets/img/python.png',
-  'assets/img/sql.jpg',
-  'assets/img/inkscape.png',
-  'assets/img/desmos.jpg',
-  'assets/img/dart.png',
-  'assets/img/ai.jpg'
-];
+
 
  ///Tabs here
 

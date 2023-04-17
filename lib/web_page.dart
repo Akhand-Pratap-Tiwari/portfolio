@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'about/about.dart';
 import 'meta.dart';
 import 'global_common_widgets/blurred_container.dart';
+import 'skills/skills.dart';
 
 class WebPage extends StatefulWidget {
   const WebPage({super.key});
@@ -127,22 +128,7 @@ class _WebPageState extends State<WebPage> with TickerProviderStateMixin {
       MyBlurredContainer(
         key: keyList[2],
         title: 'Skills',
-        body: LayoutBuilder(
-          builder: (context, constraints) => GridView.count(
-            // childAspectRatio: 1/2,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            // maxCrossAxisExtent: 4,
-            crossAxisCount: constraints.maxWidth ~/ 150,
-            mainAxisSpacing: 32,
-            crossAxisSpacing: 32,
-            children: List.generate(
-                skillPaths.length,
-                (index) => SkillBadge(
-                      index: index,
-                    )),
-          ),
-        ),
+        body: Skills(),
       ),
       MyBlurredContainer(
         key: keyList[3],
@@ -318,56 +304,6 @@ class _WebPageState extends State<WebPage> with TickerProviderStateMixin {
   }
 }
 
-
-class SkillBadge extends StatefulWidget {
-  final int index;
-  const SkillBadge({super.key, required this.index});
-
-  @override
-  State<SkillBadge> createState() => _SkillBadgeState();
-}
-
-class _SkillBadgeState extends State<SkillBadge> {
-  var _borderRadius = BorderRadius.circular(32);
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      borderRadius: _borderRadius,
-      elevation: 20,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 100),
-        decoration: BoxDecoration(
-          color: widget.index == 0
-              ? Colors.blueGrey.shade900
-              : widget.index == 2
-                  ? const Color.fromARGB(255, 44, 57, 75)
-                  : widget.index == 6
-                      ? const Color.fromARGB(255, 48, 0, 0)
-                      : widget.index == 12
-                          ? Colors.deepPurple.shade900
-                          : Colors.white,
-          borderRadius: _borderRadius,
-        ),
-        child: InkWell(
-          onTap: () {},
-          onHover: (value) => setState(() {
-            if (value) {
-              _borderRadius = BorderRadius.circular(8);
-            } else {
-              _borderRadius = BorderRadius.circular(32);
-            }
-          }),
-          child: ClipRRect(
-            borderRadius: _borderRadius,
-            child: Image.asset(skillPaths[widget.index]),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class ProjectView extends StatefulWidget {
   final BoxConstraints constraints;
