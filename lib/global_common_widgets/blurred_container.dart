@@ -20,7 +20,6 @@ class _MyBlurredContainerState extends State<MyBlurredContainer> {
   var borderRadius = BorderRadius.circular(16.0);
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Material(

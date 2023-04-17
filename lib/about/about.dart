@@ -37,8 +37,8 @@ class AboutMe extends StatelessWidget {
           alignment: Alignment.center,
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: Colors.black45,
+              borderRadius: aboutMeWidInfo.animContBorderRad,
+              color: const Color.fromRGBO(29, 29, 29, 1),
             ),
             child: LayoutBuilder(
               builder: (context, constraints) {
