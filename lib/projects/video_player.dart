@@ -37,7 +37,7 @@ class _VideoAppState extends State<VideoApp> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(widget.videoLink)
+    _controller = VideoPlayerController.asset(widget.videoLink)
       ..setLooping(true)
       ..setVolume(0)
       ..initialize()

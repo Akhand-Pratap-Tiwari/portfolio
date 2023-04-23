@@ -42,6 +42,8 @@ class AboutMe extends StatelessWidget {
             ),
             child: LayoutBuilder(
               builder: (context, constraints) {
+                        debugPrint('debug1: ' + constraints.minHeight.toString());
+
                 return LottieBuilder.asset(
                   'assets/anim/ready.json',
                   height: constraints.maxWidth / 1.5,

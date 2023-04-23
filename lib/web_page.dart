@@ -5,13 +5,14 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:portfolio/home/home.dart';
-import 'package:portfolio/tablet_layout/t_home/video_player.dart';
+import 'package:portfolio/projects/video_player.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'about/about.dart';
 import 'meta.dart';
 import 'global_common_widgets/blurred_container.dart';
+import 'projects/projects.dart';
 import 'skills/skills.dart';
 
 class WebPage extends StatefulWidget {
@@ -133,10 +134,7 @@ class _WebPageState extends State<WebPage> with TickerProviderStateMixin {
       MyBlurredContainer(
         key: keyList[3],
         title: 'Projects',
-        body: LayoutBuilder(
-          builder: (context, constraints) =>
-              ProjectView(constraints: constraints),
-        ),
+        body: Projects(),
       ),
       MyBlurredContainer(
         key: keyList[4],
@@ -304,159 +302,3 @@ class _WebPageState extends State<WebPage> with TickerProviderStateMixin {
   }
 }
 
-
-class ProjectView extends StatefulWidget {
-  final BoxConstraints constraints;
-
-  const ProjectView({super.key, required this.constraints});
-
-  @override
-  State<ProjectView> createState() => _ProjectViewState();
-}
-
-class _ProjectViewState extends State<ProjectView> {
-  List<List<String>> gitVidTitlDesc = [
-    [
-      'https://github.com/Akhand-Pratap-Tiwari/Project-Exhibition-Final',
-      'assets/vids/befap.mp4',
-      'Product Result Aggregator for Online Shopping (Jul 22 - Oct 22)',
-      '${' ' * 5}- Description: There are only two major platforms from where most of the Indians do online shopping and '
-          'those are Flipkart and Amazon. The most painful thing is to choose the correct product while also '
-          'comparing the choices from both the platforms. We made a website to ease it. It has following aims:\n\n'
-          '${' ' * 10}a- Fetch product from both platforms and present them at a single place.\n'
-          '${' ' * 10}b- Use AI to randomly sample reviews and make a simple summary out of them for the user.\n'
-          '${' ' * 10}c- Use AI to also determine the positivity of randomly sampled reviews.\n'
-          '${' ' * 10}d- A ranking system that can rank products using positivity of reviews, quantity of positive and negative reviews, price.\n\n'
-          '${' ' * 5}- Technology: HTML/CSS, JavaScript, ReactJS, MongoDB, Node.js, Python, numpy, scikit, nltk\n'
-          '${' ' * 5}- Team Project: 5 members\n'
-          '${' ' * 5}- Role: Project Lead with following responsibilities: System design and workflow, make the Ranking system, AI model for Review Summarization',
-    ],
-    [
-      'https://github.com/Akhand-Pratap-Tiwari/QT_Passenger',
-      'https://drive.google.com/uc?id=14QUxAu8iEVrI8-KeXy-JAuoPoIbzjlpq&export=download',
-      'Flexible Taxi App (Nov 22 - Feb 23)',
-      '${' ' * 5}- Description: We made a Taxi app that allows passengers to post a requirement about when and where they '
-          'want to go. Then on this requirement drivers can emit bids. Then the passenger can choose the appropriate '
-          'bid they want to accept. This increases the reachability of drivers and helps passengers to get a fair look at price.\n'
-          '${' ' * 5}- NOTE: This project works in conjunction with this project https://github.com/AkhandPratap-Tiwari/QT_Driver\n'
-          '${' ' * 5}- Technology: Flutter, Dart, Firebase, FlutterFire, FirebaseCLI\n'
-          '${' ' * 5}- Team Project: 5 members\n'
-          '${' ' * 5}- Role: Project Lead with following responsibilities: System Design, UX/UI design, Backend of Passenger side',
-    ],
-//     [
-//        'https://github.com/Akhand-Pratap-Tiwari/who-borrowed-what',
-//       'https://drive.google.com/uc?id=14QUxAu8iEVrI8-KeXy-JAuoPoIbzjlpq&export=download',
-//       'Who Borrowed What (Mar 10 - Ongoing)',
-//       '${' ' * 5}- Description: This was for my personal use and an exploratory project. I usually lend my notes, assignments'
-// 'and projects to my mates and tend to forget about those and then panic later. To solve this issue, I made'
-// 'an Android app for myself to keep track of objects that I have lent. My aim was also to explore the'
-// 'technology stack in depth as well and what new skills I can add to the arsenal.\n'
-// '${' ' * 5}- My further plan is to get this on the app store and then further integrate and use analytics tools to observe'
-// 'the traffic and potentially use AI/ML to derive some insights about the app. '
-//           '${' ' * 5}- Technology: Flutter, Dart, Firebase, FirebaseUI for Flutter, FirebaseCLI\n'
-//           '${' ' * 5}- Team Project: No\n'
-//           '${' ' * 5}- Role: From system design to final implementation.\n',
-//     ]
-  ];
-  final PageController _pageController = PageController();
-
-  @override
-  Widget build(BuildContext context) {
-    // debugPrint('debug2 :' + widget.constraints.toString());
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        SizedBox(
-          width: widget.constraints.maxWidth,
-          height: widget.constraints.maxWidth + 18,
-          child: PageView.builder(
-            // physics: BouncingScrollPhysics(),
-            controller: _pageController,
-            itemCount: gitVidTitlDesc.length,
-            itemBuilder: (context, index) => SingleChildScrollView(
-              child: Column(
-                children: [
-                  VideoApp(
-                    videoHeight: widget.constraints.maxWidth / 2,
-                    gitHubUrl: gitVidTitlDesc[index][0],
-                    videoLink: gitVidTitlDesc[index][1],
-                  ),
-                  const Divider(color: Colors.transparent),
-                  const Divider(color: Colors.transparent),
-                  // const Divider(color: Colors.transparent),
-                  // const Divider(color: Colors.transparent),
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: Divider(
-                          indent: 8,
-                          endIndent: 8,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        gitVidTitlDesc[index][2],
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 18,
-                            color: Colors.teal.shade300),
-                      ),
-                      const Expanded(
-                        child: Divider(
-                          indent: 8,
-                          endIndent: 8,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Divider(color: Colors.transparent),
-                  Text(gitVidTitlDesc[index][3])
-                  // widget.description
-                ],
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(8.0, 24, 8, 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              FloatingActionButton(
-                onPressed: () {
-                  // debugPrint('debug3 :' +_pageController.page.toString());
-                  _pageController.previousPage(
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.easeInToLinear);
-                },
-                backgroundColor: Colors.white.withOpacity(0.5),
-                child: const Icon(Icons.chevron_left_rounded),
-              ),
-              // AnimatedSmoothIndicator(activeIndex: activeIndex, count: count)
-              SmoothPageIndicator(
-                effect: const ExpandingDotsEffect(
-                  dotColor: Colors.white,
-                  activeDotColor: Colors.black,
-                ),
-                controller: _pageController,
-                count: gitVidTitlDesc.length,
-              ),
-              FloatingActionButton(
-                onPressed: () {
-                  // debugPrint('debug3 :'+_pageController.page.toString());
-                  _pageController.nextPage(
-                    duration: const Duration(milliseconds: 250),
-                    curve: Curves.easeInToLinear,
-                  );
-                },
-                backgroundColor: Colors.white.withOpacity(0.5),
-                child: const Icon(Icons.chevron_right_rounded),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}

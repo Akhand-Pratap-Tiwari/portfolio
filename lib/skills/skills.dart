@@ -10,7 +10,10 @@ class Skills extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) => GridView.count(
+      builder: (context, constraints) {
+                debugPrint('debug1: ' + constraints.minHeight.toString());
+
+        return GridView.count(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: constraints.maxWidth ~/ 150,
@@ -22,7 +25,8 @@ class Skills extends StatelessWidget {
             index: index,
           ),
         ),
-      ),
+      );
+      },
     );
   }
 }

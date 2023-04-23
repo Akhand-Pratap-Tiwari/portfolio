@@ -15,6 +15,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         useMaterial3: true,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: Colors.white),
         textTheme: ThemeData.dark().textTheme.copyWith(
               displayLarge: textStyleWhite,
               displayMedium: textStyleWhite,

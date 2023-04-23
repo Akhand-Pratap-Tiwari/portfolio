@@ -19,6 +19,8 @@ class _ConstraintsState extends State<Constraints> {
     return SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) {
+                  debugPrint('debug1: ' + constraints.minHeight.toString());
+
           // globalConstraints = constraints;
           if (constraints.maxWidth <= 640) {
             isMobile = true;
