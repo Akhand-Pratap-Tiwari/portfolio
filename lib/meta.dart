@@ -2,7 +2,7 @@
 
  ///Tabs here
 
-final String expAndRes =
+const String expAndRes =
     '- Leader of group in project exhibition in 2 consecutive sems.\n'
     '- Speaker at Flutter Forward event.\n'
     '- Speaker at GDSC Techathon Event.\n'

@@ -10,10 +10,7 @@ class Skills extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) {
-                debugPrint('debug1: ' + constraints.minHeight.toString());
-
-        return GridView.count(
+      builder: (context, constraints) => GridView.count(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: constraints.maxWidth ~/ 150,
@@ -25,8 +22,7 @@ class Skills extends StatelessWidget {
             index: index,
           ),
         ),
-      );
-      },
+      ),
     );
   }
 }
@@ -43,7 +39,7 @@ class _SkillBadgeState extends State<SkillBadge> {
   SkillsWidgetInfo widInfo = SkillsWidgetInfo();
   BorderRadius borderRadius = BorderRadius.circular(32);
   double elevation = 10;
-  EdgeInsets padding = EdgeInsets.all(8);
+  EdgeInsets padding = const EdgeInsets.all(8);
   _animate(bool value) {
     setState(() {
       if (value) {
@@ -61,7 +57,7 @@ class _SkillBadgeState extends State<SkillBadge> {
   @override
   Widget build(BuildContext context) {
     return AnimatedPadding(
-      duration: Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 100),
       padding: padding,
       child: Material(
         color: Colors.transparent,

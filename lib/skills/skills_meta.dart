@@ -19,9 +19,9 @@ final List<String> skillPaths = [
 class SkillsWidgetInfo {
 BorderRadius baseBorderRadius = BorderRadius.circular(32);
   double baseElevation = 10;
-  EdgeInsets basePadding = EdgeInsets.all(8);
+  EdgeInsets basePadding = const EdgeInsets.all(8);
 
   BorderRadius aniBorderRadius = BorderRadius.circular(8);
   double aniElevation = 20;
-  EdgeInsets aniPadding = EdgeInsets.all(0);
+  EdgeInsets aniPadding = const EdgeInsets.all(0);
 }

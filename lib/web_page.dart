@@ -5,8 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:portfolio/home/home.dart';
-import 'package:portfolio/projects/video_player.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'about/about.dart';
@@ -124,17 +122,17 @@ class _WebPageState extends State<WebPage> with TickerProviderStateMixin {
         key: keyList[1],
         // animation: 'assets/anim/development.json',
         title: 'About Me',
-        body: AboutMe(),
+        body: const AboutMe(),
       ),
       MyBlurredContainer(
         key: keyList[2],
         title: 'Skills',
-        body: Skills(),
+        body: const Skills(),
       ),
       MyBlurredContainer(
         key: keyList[3],
         title: 'Projects',
-        body: Projects(),
+        body: const Projects(),
       ),
       MyBlurredContainer(
         key: keyList[4],

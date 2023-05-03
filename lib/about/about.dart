@@ -41,18 +41,14 @@ class AboutMe extends StatelessWidget {
               color: const Color.fromRGBO(29, 29, 29, 1),
             ),
             child: LayoutBuilder(
-              builder: (context, constraints) {
-                        debugPrint('debug1: ' + constraints.minHeight.toString());
-
-                return LottieBuilder.asset(
-                  'assets/anim/ready.json',
-                  height: constraints.maxWidth / 1.5,
-                  width: constraints.maxWidth / 1.5,
-                  alignment: Alignment.center,
-                  frameRate: FrameRate.max,
-                  reverse: true,
-                );
-              },
+              builder: (context, constraints) => LottieBuilder.asset(
+                'assets/anim/ready.json',
+                height: constraints.maxWidth / 1.5,
+                width: constraints.maxWidth / 1.5,
+                alignment: Alignment.center,
+                frameRate: FrameRate.max,
+                reverse: true,
+              ),
             ),
           ),
         ),

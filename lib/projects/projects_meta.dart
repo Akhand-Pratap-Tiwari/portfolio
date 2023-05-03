@@ -21,10 +21,10 @@ List<List<String>> gitVidTitlDesc = [
     '- Description: We made a Taxi app that allows passengers to post a requirement about when and where they '
         'want to go. Then on this requirement drivers can emit bids. Then the passenger can choose the appropriate '
         'bid they want to accept. This increases the reachability of drivers and helps passengers to get a fair look at price.\n'
-        '- NOTE: This project works in conjunction with this project https://github.com/AkhandPratap-Tiwari/QT_Driver\n'
-        '- Technology: Flutter, Dart, Firebase, FlutterFire, FirebaseCLI\n'
-        '- Team Project: 5 members\n'
-        '- Role: Project Lead with following responsibilities: System Design, UX/UI design, Backend of Passenger side',
+        '\n- NOTE: This project works in conjunction with this project https://github.com/AkhandPratap-Tiwari/QT_Driver\n'
+        '\n- Technology: Flutter, Dart, Firebase, FlutterFire, FirebaseCLI\n'
+        '\n- Team Project: 5 members\n'
+        '\n- Role: Project Lead with following responsibilities: System Design, UX/UI design, Backend of Passenger side',
   ],
 //     [
 //        'https://github.com/Akhand-Pratap-Tiwari/who-borrowed-what',

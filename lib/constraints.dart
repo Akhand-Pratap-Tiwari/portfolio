@@ -19,24 +19,18 @@ class _ConstraintsState extends State<Constraints> {
     return SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) {
-                  debugPrint('debug1: ' + constraints.minHeight.toString());
-
-          // globalConstraints = constraints;
           if (constraints.maxWidth <= 640) {
             isMobile = true;
             isTablet = false;
             isDesktop = false;
-            // debugPrint('debug4: ' + 'Here1');
           } else if (constraints.maxWidth <= 1007) {
             isMobile = false;
             isTablet = true;
             isDesktop = false;
-            // debugPrint('debug4: ' + 'Here2');
           } else {
             isMobile = false;
             isTablet = false;
             isDesktop = true;
-            // debugPrint('debug4: ' + 'Here3');
           }
           return const WebPage();
         },

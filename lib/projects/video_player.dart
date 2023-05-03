@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -40,11 +39,9 @@ class _VideoAppState extends State<VideoApp> {
     _controller = VideoPlayerController.asset(widget.videoLink)
       ..setLooping(true)
       ..setVolume(0)
-      ..initialize()
-          // ..setVolume(0)
-          .then((value) => setState(() {
-                _controller.play();
-              }));
+      ..initialize().then((value) => setState(() {
+            _controller.play();
+          }));
   }
 
   @override
