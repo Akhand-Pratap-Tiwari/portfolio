@@ -1,3 +1,2 @@
 # portfolio
-
-A new Flutter project.
+Still uncompleted and I am exploring opportunities for Flutter on web.
